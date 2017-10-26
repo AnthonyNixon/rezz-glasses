@@ -16,11 +16,12 @@
 
 #define BRIGHTNESS 50
 
-#define NUM_LOOPS_COLORWIPE 1
-#define NUM_LOOPS_RAINBOW 1
-#define NUM_LOOPS_EXPAND 1
-#define NUM_LOOPS_PUMPKIN 1
-#define NUM_LOOPS_STRIPES 2
+#define NUM_LOOPS_COLORWIPE 0
+#define NUM_LOOPS_RAINBOW 0
+#define NUM_LOOPS_EXPAND 0
+#define NUM_LOOPS_PUMPKIN 0
+#define NUM_LOOPS_STRIPES 0
+#define NUM_LOOPS_STRIPEWIPE 1
 
 #define EXPAND_CYCLES 2
 #define STRIPES_CYCLES 10
@@ -70,6 +71,10 @@ void loop() {
 
   for (uint16_t i=0; i<NUM_LOOPS_STRIPES; i++) {
     stripes();
+  }
+
+  for (uint16_t i=0; i<NUM_LOOPS_STRIPEWIPE; i++){
+    stripeWipe();
   }
 }
 
@@ -206,6 +211,99 @@ void stripesHelper(uint32_t background, uint32_t stripe) {
     }
   }
 }
+
+void stripeWipe() {
+  stripeWipeHelper(left.Color(BRIGHTNESS, 0, 0));
+  stripeWipeHelper(left.Color(0, BRIGHTNESS, 0));
+  stripeWipeHelper(left.Color(0, 0, BRIGHTNESS));
+}
+
+void stripeWipeHelper(uint32_t color){
+  for (uint16_t i=0; i<16; i++){
+    switch (i) {
+    case 0:
+      setPixelColors(0, color);
+      setPixelColors(24, color);
+      break;
+    case 1:
+      setPixelColors(1, color);
+      setPixelColors(2, color);
+      setPixelColors(25, color);
+      break;
+    case 2:
+      setPixelColors(3, color);
+      setPixelColors(26, color);
+      setPixelColors(40, color);;
+      break;
+    case 3:
+      setPixelColors(4, color);
+      setPixelColors(5, color);
+      setPixelColors(27, color);
+      break;
+    case 4:
+      setPixelColors(6, color);
+      setPixelColors(28, color);
+      break;
+    case 5:
+      setPixelColors(7, color);
+      setPixelColors(8, color);
+      setPixelColors(29, color);
+      break;
+    case 6:
+      setPixelColors(9, color);
+      setPixelColors(30, color);
+      setPixelColors(41, color);
+      break;
+    case 7:
+      setPixelColors(10, color);
+      setPixelColors(11, color);
+      setPixelColors(31, color);
+      break;
+    case 8:
+      setPixelColors(12, color);
+      setPixelColors(32, color);
+      break;
+    case 9:
+      setPixelColors(13, color);
+      setPixelColors(14, color);
+      setPixelColors(33, color);
+      break;
+    case 10:
+      setPixelColors(15, color);
+      setPixelColors(34, color);
+      setPixelColors(42, color);
+      break;
+    case 11:
+      setPixelColors(16, color);
+      setPixelColors(17, color);
+      setPixelColors(35, color);
+      break;
+    case 12:
+      setPixelColors(18, color);
+      setPixelColors(36, color);
+      break;
+    case 13:
+      setPixelColors(19, color);
+      setPixelColors(20, color);
+      setPixelColors(37, color);
+      break;
+    case 14:
+      setPixelColors(21, color);
+      setPixelColors(38, color);
+      setPixelColors(43, color);
+      break;
+    case 15:
+      setPixelColors(22, color);
+      setPixelColors(23, color);
+      setPixelColors(39, color);
+      break;
+    }
+    showStrips();
+    delay(DELAY);
+  }
+}
+
+
 
 uint16_t getRight(uint16_t left) {
   if (left <= OUTSIDE_END) {
