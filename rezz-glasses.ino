@@ -14,14 +14,15 @@
 #define INNER_END 43
 #define NUM_PIXELS 44
 
-#define BRIGHTNESS 50
+#define BRIGHTNESS 25
 
-#define NUM_LOOPS_COLORWIPE 0
-#define NUM_LOOPS_RAINBOW 0
-#define NUM_LOOPS_EXPAND 0
-#define NUM_LOOPS_PUMPKIN 0
-#define NUM_LOOPS_STRIPES 0
-#define NUM_LOOPS_STRIPEWIPE 1
+#define NUM_LOOPS_COLORWIPE 1
+#define NUM_LOOPS_RAINBOW 1
+#define NUM_LOOPS_EXPAND 1
+#define NUM_LOOPS_PUMPKIN 3
+#define NUM_LOOPS_STRIPES 2
+#define NUM_LOOPS_STRIPEWIPE 2
+#define NUM_LOOPS_EYEROLL 3
 
 #define EXPAND_CYCLES 2
 #define STRIPES_CYCLES 10
@@ -75,6 +76,10 @@ void loop() {
 
   for (uint16_t i=0; i<NUM_LOOPS_STRIPEWIPE; i++){
     stripeWipe();
+  }
+
+  for (uint16_t i=0; i<NUM_LOOPS_EYEROLL; i++){
+    eyeRoll();
   }
 }
 
@@ -303,7 +308,27 @@ void stripeWipeHelper(uint32_t color){
   }
 }
 
+void eyeRoll(){
+  for (uint16_t i=0; i<NUM_PIXELS; i++){
+    setPixelColors(i, left.Color(0,0,0));
+  }
 
+  for (uint16_t i=OUTSIDE_START; i<=OUTSIDE_END; i++){
+    setPixelColors(i, left.Color(0, BRIGHTNESS, 0));
+  }
+
+  for (uint16_t i=MIDDLE_START; i<=MIDDLE_END; i++){
+    left.setPixelColor(i, left.Color(BRIGHTNESS, 0, 0));
+    right.setPixelColor(i, left.Color(BRIGHTNESS, 0, 0));
+
+    showStrips();
+    delay(DELAY*2);    
+    left.setPixelColor(i, left.Color(0, 0, 0));
+    right.setPixelColor(i, left.Color(0, 0, 0));
+  }
+  
+  showStrips();
+}
 
 uint16_t getRight(uint16_t left) {
   if (left <= OUTSIDE_END) {
