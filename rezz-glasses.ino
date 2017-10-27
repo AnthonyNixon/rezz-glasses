@@ -16,16 +16,18 @@
 
 #define BRIGHTNESS 25
 
-#define NUM_LOOPS_COLORWIPE 1
-#define NUM_LOOPS_RAINBOW 1
-#define NUM_LOOPS_EXPAND 1
-#define NUM_LOOPS_PUMPKIN 3
-#define NUM_LOOPS_STRIPES 2
-#define NUM_LOOPS_STRIPEWIPE 2
-#define NUM_LOOPS_EYEROLL 3
+#define NUM_LOOPS_COLORWIPE 0
+#define NUM_LOOPS_RAINBOW 0
+#define NUM_LOOPS_EXPAND 0
+#define NUM_LOOPS_PUMPKIN 0
+#define NUM_LOOPS_STRIPES 0
+#define NUM_LOOPS_STRIPEWIPE 0
+#define NUM_LOOPS_EYEROLL 0
+#define NUM_LOOPS_ROTATE_EYES 3
 
 #define EXPAND_CYCLES 2
 #define STRIPES_CYCLES 10
+#define ROTATE_EYES_CYCLES 4
 
 #define DELAY 50
 
@@ -80,6 +82,10 @@ void loop() {
 
   for (uint16_t i=0; i<NUM_LOOPS_EYEROLL; i++){
     eyeRoll();
+  }
+
+  for (uint16_t i=0; i<NUM_LOOPS_ROTATE_EYES; i++){
+    rotateEyes();
   }
 }
 
@@ -329,6 +335,26 @@ void eyeRoll(){
   
   showStrips();
 }
+
+void rotateEyes() {
+  for (uint8_t i=INNER_START; i<=INNER_END; i++){
+    setPixelColors(i, left.Color(BRIGHTNESS, 0, 0));
+  }
+  
+  for (uint8_t i=0; i<6; i++){
+    for (uint8_t j=OUTSIDE_START; j<=OUTSIDE_END; j++){
+      setPixelColors(j, left.Color(0, 0, 0));
+    }
+
+    setPixelColors(i, left.Color(0, BRIGHTNESS, 0));
+    setPixelColors(i+6, left.Color(0, BRIGHTNESS, 0));
+    setPixelColors(i+12, left.Color(0, BRIGHTNESS, 0));
+    setPixelColors(i+18, left.Color(0, BRIGHTNESS, 0));
+    showStrips();
+    delay(DELAY);
+  }
+}
+
 
 uint16_t getRight(uint16_t left) {
   if (left <= OUTSIDE_END) {
