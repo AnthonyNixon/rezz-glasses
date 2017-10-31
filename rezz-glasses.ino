@@ -16,14 +16,15 @@
 
 #define BRIGHTNESS 25
 
-#define NUM_LOOPS_COLORWIPE 0
-#define NUM_LOOPS_RAINBOW 0
-#define NUM_LOOPS_EXPAND 0
-#define NUM_LOOPS_PUMPKIN 0
-#define NUM_LOOPS_STRIPES 0
-#define NUM_LOOPS_STRIPEWIPE 0
-#define NUM_LOOPS_EYEROLL 0
+#define NUM_LOOPS_COLORWIPE 2
+#define NUM_LOOPS_RAINBOW 1
+#define NUM_LOOPS_EXPAND 1
+#define NUM_LOOPS_PUMPKIN 2
+#define NUM_LOOPS_STRIPES 1
+#define NUM_LOOPS_STRIPEWIPE 3
+#define NUM_LOOPS_EYEROLL 2
 #define NUM_LOOPS_ROTATE_EYES 3
+#define NUM_LOOPS_ROTATE_EYES2 0
 
 #define EXPAND_CYCLES 2
 #define STRIPES_CYCLES 10
@@ -353,6 +354,14 @@ void rotateEyes() {
     showStrips();
     delay(DELAY);
   }
+}
+
+void rotateEyes2() {
+  for (uint16_t j=OUTSIDE_START; j<=INNER_END; j++){
+    setPixelColors(j, left.Color(0,0,0));
+  }
+
+  
 }
 
 
